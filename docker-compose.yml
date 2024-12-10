@@ -12,10 +12,8 @@ services:
       - MYSQL_ROOT_PASSWORD=Mail.12345
 
   postfixadmin:
-    image: postfixadmin:latest
+    image: postfixadmin:fpm
     container_name: postfixadmin
-    ports:
-      - "8000:80"
     #restart: always
     volumes:
       - ./www/postfixadmin:/var/www/html
@@ -67,20 +65,21 @@ services:
     # restart: unless-stopped
     ports:
       - 80:80
+      - 8080:8080
+      - 8082:8082
       # If you need SSL connection
       - 443:443
     volumes:
-      - ./www/roundcubemail:/var/www/html
-      - ./nginx/templates:/etc/nginx/templates
+      - ./www:/var/www/html
       # Provide a custom nginx conf
       # - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/conf.d:/etc/nginx/conf.d
       # If you need SSL connection, you can provide your own certificates
       # - ./certs:/etc/letsencrypt
       # - ./certs-data:/data/letsencrypt
-    environment:
-      - NGINX_HOST=localhost  # set your local domain or your live domain
-      - NGINX_PHP_CGI=roundcubemail:9000  # same as roundcubemail container name
+    #environment:
+      #- NGINX_HOST=localhost  # set your local domain or your live domain
+      #- NGINX_PHP_CGI=roundcubemail:9000  # same as roundcubemail container name
 
 ### Optional: add a full mail server stack to use with Roundcube like https://github.com/docker-mailserver/docker-mailserver
 #   mailserver:
