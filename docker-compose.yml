@@ -51,6 +51,7 @@ services:
       - "587:587"
     volumes:
       - ./postfix:/etc/postfix
+      - ./data/certs:/certs
 
   roundcubemail:
     image: roundcube/roundcubemail:latest-fpm

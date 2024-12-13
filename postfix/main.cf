@@ -66,3 +66,4 @@ smtpd_sender_login_maps =
    proxy:mysql:/etc/postfix/sql/mysql_virtual_sender_maps.cf,
    proxy:mysql:/etc/postfix/sql/mysql_virtual_alias_maps.cf
 
+tls_server_sni_maps = hash:/etc/postfix/certs_map

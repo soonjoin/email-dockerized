@@ -1,0 +1,4 @@
+# Compile with postmap -F hash:/etc/postfix/vmail_ssl.map when updating
+# One host per line, key first
+#host1.com /certs/host1.com.key /certs/host1.com.pem
+#host2.com /certs/host2.com.key /certs/host2.com.pem
