@@ -39,6 +39,7 @@ services:
     volumes:
       - ./data/mail:/srv/mail
       - ./dovecot:/etc/dovecot
+      - ./data/certs:/certs
 
   postfix:
     image: postfix:latest

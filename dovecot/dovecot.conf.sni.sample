@@ -1,0 +1,85 @@
+## You should mount /etc/dovecot if you want to
+## manage this file
+
+#mail_home=/srv/mail/%Lu
+mail_location=maildir:/srv/mail/%d/%n
+mail_uid=1000
+mail_gid=1000
+
+protocols = imap pop3 submission sieve lmtp
+
+first_valid_uid = 1000
+last_valid_uid = 1000
+
+passdb {
+  driver = sql
+  args = /etc/dovecot/dovecot-sql.conf.ext
+}
+
+ssl=yes
+ssl_cert=<cert.pem
+ssl_key=<key.pem
+
+local_name host1.com {
+    ssl_cert = </certs/host1.com.pem
+    ssl_key = </certs/host1.com.key
+}
+
+local_name host2.com {
+    ssl_cert = </certs/host2.com.pem
+    ssl_key = </certs/host2.com.key
+}
+
+namespace {
+  inbox = yes
+  separator = /
+}
+
+service lmtp {
+  inet_listener {
+    port = 24
+  }
+}
+
+service imap-login {
+  process_min_avail = 1
+  client_limit = 1000
+  service_count = 0
+}
+
+service pop3-login {
+  process_min_avail = 1
+  client_limit = 1000
+  service_count = 0
+}
+
+service submission-login {
+  process_min_avail = 1
+  client_limit = 1000
+  service_count = 0
+}
+
+service managesieve-login {
+  process_min_avail = 1
+  client_limit = 1000
+  service_count = 0
+}
+
+service auth {
+ inet_listener {
+   port = 12345
+ }
+}
+
+listen = *
+
+log_path=/dev/stdout
+info_log_path=/dev/stdout
+debug_log_path=/dev/stdout
+
+verbose_proctitle = yes
+
+managesieve_notify_capability = mailto
+managesieve_sieve_capability = fileinto reject envelope encoded-character vacation subaddress comparator-i;ascii-numeric relational regex imap4flags copy include variables body enotify environment mailbox date index ihave duplicate mime foreverypart extracttext
+
+!include_try /etc/dovecot/conf.d/*.conf
