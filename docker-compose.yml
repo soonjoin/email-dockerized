@@ -2,6 +2,7 @@ services:
   db:
     image: mysql:5.7
     container_name: db
+    platform: linux/amd64
     #restart: unless-stopped
     ports:
       - "3306:3306"
@@ -30,6 +31,7 @@ services:
   dovecot:
     image: dovecot/dovecot:latest
     container_name: dovecot
+    platform: linux/amd64
     volumes:
       - ./data/mail:/srv/mail
       - ./dovecot:/etc/dovecot
@@ -47,6 +49,7 @@ services:
   roundcubemail:
     image: roundcube/roundcubemail:latest-fpm
     container_name: roundcubemail
+    platform: linux/amd64
     # restart: unless-stopped
     volumes:
       - ./www/roundcubemail:/var/www/html
