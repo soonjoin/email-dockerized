@@ -2,7 +2,7 @@ services:
   db:
     image: mysql:5.7
     container_name: db
-    #restart: unless-stopped
+    restart: unless-stopped
     ports:
       - "3306:3306"
     volumes:
@@ -14,7 +14,7 @@ services:
   postfixadmin:
     image: postfixadmin:fpm
     container_name: postfixadmin
-    #restart: always
+    restart: unless-stopped
     volumes:
       - ./www/postfixadmin:/var/www/html
     environment:
@@ -30,6 +30,7 @@ services:
   dovecot:
     image: dovecot/dovecot:latest
     container_name: dovecot
+    restart: unless-stopped
     ports:
       - "110:110"
       - "143:143"
@@ -42,6 +43,7 @@ services:
   postfix:
     image: postfix:latest
     container_name: postfix
+    restart: unless-stopped
     ports:
       - "25:25"
       - "465:465"
@@ -52,7 +54,7 @@ services:
   roundcubemail:
     image: roundcube/roundcubemail:latest-fpm
     container_name: roundcubemail
-    # restart: unless-stopped
+    restart: unless-stopped
     volumes:
       - ./www/roundcubemail:/var/www/html
     environment:
@@ -67,7 +69,7 @@ services:
   nginx:
     image: nginx:latest
     container_name: nginx
-    # restart: unless-stopped
+    restart: unless-stopped
     ports:
       - 80:80
       # If you need SSL connection
